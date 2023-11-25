@@ -58,9 +58,15 @@ jobs:
           IMAGE_REMOTE_URI: ${{ secrets.IMAGE_URI }}/django-deploy
         run: |
           ssh -i ~/.ssh/dev.key -o StrictHostKeyChecking=no ec2-user@${{ secrets.IP_ADDRESS }} << 'ENDSSH'
+            mkdir -p django_deploy
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.IMAGE_REMOTE }}
+          ENDSSH
+          scp -i ~/.ssh/dev.key -o StrictHostKeyChecking=no docker-compose-deploy.yml ec2-user@${{ secrets.IP_ADDRESS }}:./django_deploy
+          ssh -i ~/.ssh/dev.key -o StrictHostKeyChecking=no ec2-user@${{ secrets.IP_ADDRESS }} << 'ENDSSH'
             ls
             mkdir -p django_deploy
             ls
           ENDSSH
+          
 
           
