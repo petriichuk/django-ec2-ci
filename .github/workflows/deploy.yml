@@ -54,8 +54,13 @@ jobs:
       - name: Pull image and deploy
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+          IMAGE_REMOTE: ${{ secrets.IMAGE_URI }}
+          IMAGE_REMOTE_URI: ${{ secrets.IMAGE_URI }}/django-deploy
         run: |
-          mkdir -p django_deploy
-          ls
-          
+          ssh -i ~/.ssh/dev.key -o StrictHostKeyChecking=no ec2-user@${{ secrets.IP_ADDRESS }} << 'ENDSSH'
+            ls
+            mkdir -p django_deploy
+            ls
+          ENDSSH
+
           
