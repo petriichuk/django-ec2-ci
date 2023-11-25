@@ -54,7 +54,7 @@ jobs:
           END
       - name: Create env file
         run: |
-          echo BE_IMAGE="${{ secrets.IMAGE_URI }}/django-deploy:latest"
+          echo BE_IMAGE="${{ secrets.IMAGE_URI }}/django-deploy:latest" >> .env
       - name: Pull image and deploy
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
