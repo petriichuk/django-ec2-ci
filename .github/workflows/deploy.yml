@@ -43,6 +43,7 @@ jobs:
           mkdir -p ~/.ssh/
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/dev.key
           chmod 600 ~/.ssh/dev.key
+          cat >>~/.ssh/config <<END
           Host deployment
             Hostname ${{ secrets.IP_ADDRESS }}
             User ec2-user
