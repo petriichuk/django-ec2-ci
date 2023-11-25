@@ -70,6 +70,7 @@ jobs:
           scp -i ~/.ssh/dev.key -o StrictHostKeyChecking=no -r docker-compose-deploy.yml ec2-user@${{ secrets.IP_ADDRESS }}:./django_deploy
           ssh -i ~/.ssh/dev.key -o StrictHostKeyChecking=no ec2-user@${{ secrets.IP_ADDRESS }} << 'ENDSSH'
             cd django_deploy
+            docker pull ${{ env.IMAGE_REMOTE_URI }}:latest
             docker-compose -f docker-compose-deploy.yml down
             docker-compose -f docker-compose-deploy.yml up -d
           ENDSSH
